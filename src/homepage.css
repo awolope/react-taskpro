@@ -1,0 +1,31 @@
+/* HomePage.css */
+
+.hero-section {
+  background: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 5rem 0;
+}
+
+.features-section {
+  background: #ffffff;
+  padding: 5rem 0;
+}
+
+.feature-card {
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+
+.cta-section {
+  background: #e9ecef;
+  padding: 5rem 0;
+}
+
+.date-time-section {
+  background: #f1f3f5;
+  border-top: 1px solid #dee2e6;
+  padding: 3rem 0;
+}

@@ -1,0 +1,57 @@
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+/* signup.css */
+
+.password-container {
+  position: relative;
+}
+
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Form input fields */
+.form-control {
+  margin-bottom: 15px;
+  border-radius: 0.25rem;
+}
+
+/* Input group for password visibility toggle */
+.input-group {
+  position: relative;
+}
+
+/* Button for password visibility toggle */
+.input-group .btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 2;
+  border-radius: 0;
+}
+
+/* Checkbox and label for terms and conditions */
+.form-check {
+  margin-top: 10px;
+}
+.position-relative {
+  position: relative;
+}
+
+.password-toggle:hover {
+  color: #0056b3; /* Darker shade of primary color */
+}
+/* Button styling */
+.btn-primary {
+  width: 100%;
+  margin-top: 10px;
+}
