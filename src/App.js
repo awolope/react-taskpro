@@ -1,72 +1,35 @@
-// App.jsx
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./Navbar";
 import HomePage from "./Hompeage";
-import SignUpPage from "./Signup";
-import LoginPage from "./Login";
-import TaskPage from "./TaskPage";
-import MyNavbar from "./Navbar"; // Ensure this is the correct path
-import "./App.css";
+import SignUp from "./Signup";
+import Login from "./Login";
+import "./App.css"; // For custom CSS
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
-      setIsLoggedIn(true);
+      setUser(storedUser);
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(user));
-  }, [user]);
-
-  const handleLogin = (userData) => {
-    localStorage.setItem("user", JSON.stringify(userData));
-    setIsLoggedIn(true);
-    setUser(userData);
+  const handleLogin = (loggedInUser) => {
+    setUser(loggedInUser);
+    localStorage.setItem("user", JSON.stringify(loggedInUser));
   };
 
   return (
     <Router>
-      <div className="container">
-        {isLoggedIn && <MyNavbar user={user} />}
+      <Navbar user={user} />
+      <div className="content">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route
-            path="/signup"
-            element={
-              isLoggedIn ? (
-                <TaskPage user={user} />
-              ) : (
-                <SignUpPage onLogin={handleLogin} />
-              )
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              isLoggedIn ? (
-                <TaskPage user={user} />
-              ) : (
-                <LoginPage onLogin={handleLogin} />
-              )
-            }
-          />
-          <Route
-            path="/task"
-            element={
-              isLoggedIn ? (
-                <TaskPage user={user} />
-              ) : (
-                <LoginPage onLogin={handleLogin} />
-              )
-            }
-          />
+
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
         </Routes>
       </div>
     </Router>

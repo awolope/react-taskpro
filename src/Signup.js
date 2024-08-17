@@ -1,155 +1,159 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ReactPhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import "./signup.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import "./signup.css";
 
-const SignUpPage = ({ onLogin }) => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
-    phone: "",
-    terms: false,
+    acceptedTerms: false,
   });
-
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const handleChange = (e) => {
-    const { name, value, checked, type } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formData.terms && validateForm()) {
-      const user = { ...formData };
-      localStorage.setItem("user", JSON.stringify(user));
-      onLogin(user);
-      navigate("/task");
-    }
-  };
 
   const validateForm = () => {
-    const { firstName, lastName, email, password, confirmPassword } = formData;
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const passwordPattern = /^(?=.*[A-Z])(?=.*\d)/;
+    const newErrors = {};
 
-    // Validate passwords match and other conditions
-    return (
-      firstName &&
-      lastName &&
-      emailPattern.test(email) &&
-      passwordPattern.test(password) &&
-      password === confirmPassword
-    );
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required";
+    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
+    if (!formData.email.includes("@")) newErrors.email = "Invalid email format";
+    if (formData.password.length < 8)
+      newErrors.password = "Password must be at least 8 characters";
+    if (formData.password !== formData.confirmPassword)
+      newErrors.confirmPassword = "Passwords do not match";
+    if (!formData.acceptedTerms)
+      newErrors.acceptedTerms = "You must accept the terms and conditions";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      localStorage.setItem("user", JSON.stringify(formData));
+      navigate("/tasks");
+    }
+  };
   return (
-    <div className="container mt-5">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-3">
-          <label className="form-label">First Name</label>
+    <div className="signup-container">
+      <form onSubmit={handleSubmit} className="signup-form">
+        <h2>Sign Up</h2>
+        <div className="form-group">
+          <label>First Name</label>
           <input
             type="text"
-            className="form-control"
             name="firstName"
             value={formData.firstName}
             onChange={handleChange}
-            required
+            className={`form-control ${errors.firstName && "is-invalid"}`}
           />
+          {errors.firstName && (
+            <small className="error-text">{errors.firstName}</small>
+          )}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Last Name</label>
+        <div className="form-group">
+          <label>Last Name</label>
           <input
             type="text"
-            className="form-control"
             name="lastName"
             value={formData.lastName}
             onChange={handleChange}
-            required
+            className={`form-control ${errors.lastName && "is-invalid"}`}
           />
+          {errors.lastName && (
+            <small className="error-text">{errors.lastName}</small>
+          )}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Email</label>
+        <div className="form-group">
+          <label>Email</label>
           <input
             type="email"
-            className="form-control"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            required
+            className={`form-control ${errors.email && "is-invalid"}`}
           />
+          {errors.email && <small className="error-text">{errors.email}</small>}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Password</label>
+        <div className="form-group">
+          <label>Password</label>
           <div className="password-container">
             <input
               type={showPassword ? "text" : "password"}
-              className="form-control"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              required
+              className={`form-control ${errors.password && "is-invalid"}`}
             />
-            <button
-              type="button"
-              className="btn btn-light password-toggle"
-              onClick={() => setShowPassword(!showPassword)}
+            <span
+              className="password-toggle"
+              onClick={togglePasswordVisibility}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
+            </span>
           </div>
+          {errors.password && (
+            <small className="error-text">{errors.password}</small>
+          )}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Confirm Password</label>
+        <div className="form-group">
+          <label>Confirm Password</label>
           <div className="password-container">
             <input
-              type={showConfirmPassword ? "text" : "password"}
-              className="form-control"
+              type={showPassword ? "text" : "password"}
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              required
+              className={`form-control ${
+                errors.confirmPassword && "is-invalid"
+              }`}
             />
-            <button
-              type="button"
-              className="btn btn-light password-toggle"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            <span
+              className="password-toggle"
+              onClick={togglePasswordVisibility}
             >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </span>
           </div>
+          {errors.confirmPassword && (
+            <small className="error-text">{errors.confirmPassword}</small>
+          )}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Phone</label>
-          <ReactPhoneInput
-            country={"us"}
-            value={formData.phone}
-            onChange={(phone) => setFormData({ ...formData, phone })}
+        <div className="form-group terms">
+          <input
+            type="checkbox"
+            name="acceptedTerms"
+            checked={formData.acceptedTerms}
+            onChange={handleChange}
+            className={`form-check-input ${
+              errors.acceptedTerms && "is-invalid"
+            }`}
           />
-        </div>
-        <div className="mb-3">
-          <label className="form-check-label">
-            <input
-              type="checkbox"
-              className="form-check-input"
-              name="terms"
-              checked={formData.terms}
-              onChange={handleChange}
-              required
-            />
-            I agree to the terms and conditions
+          <label>
+            I accept the <a href="/terms">terms and conditions</a>
           </label>
+          {errors.acceptedTerms && (
+            <small className="error-text">{errors.acceptedTerms}</small>
+          )}
         </div>
         <button type="submit" className="btn btn-primary">
           Sign Up
@@ -159,4 +163,4 @@ const SignUpPage = ({ onLogin }) => {
   );
 };
 
-export default SignUpPage;
+export default SignUp;

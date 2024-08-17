@@ -1,34 +1,44 @@
 import React from "react";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
-//import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Navbar as BootstrapNavbar, Nav } from "react-bootstrap";
 
-const MyNavbar = ({ user }) => {
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    navigate("/login");
-  };
+const Navbar = ({ user }) => {
   return (
-    <Navbar bg="light" variant="light" expand="lg" fixed="top">
-      <Container>
-        <Navbar.Brand href="/">Welcome </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll">
-          <Nav className="me-auto my-2 my-lg-0">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-            <Nav.Link href="/task">Tasks</Nav.Link>
-          </Nav>
-          <Nav className="ms-auto">
-            <Button variant="outline-danger" onClick={handleLogout}>
-              Logout
-            </Button>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <BootstrapNavbar bg="light" expand="lg">
+      <BootstrapNavbar.Brand as={Link} to="/">
+        TaskPro
+      </BootstrapNavbar.Brand>
+      <span className="navbar-text">Hi, {user.firstName}</span>
+      <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
+      <BootstrapNavbar.Collapse id="basic-navbar-nav">
+        <Nav className="mx-auto">
+          <Nav.Link as={Link} to="/">
+            Home
+          </Nav.Link>
+
+          {user ? (
+            <>
+              <Nav.Link as={Link} to="/tasks">
+                Tasks
+              </Nav.Link>
+              <Nav.Link as={Link} to="/login">
+                Logout
+              </Nav.Link>
+            </>
+          ) : (
+            <>
+              <Nav.Link as={Link} to="/login">
+                Login
+              </Nav.Link>
+              <Nav.Link as={Link} to="/signup">
+                Sign Up
+              </Nav.Link>
+            </>
+          )}
+        </Nav>
+      </BootstrapNavbar.Collapse>
+    </BootstrapNavbar>
   );
 };
 
-export default MyNavbar;
+export default Navbar;

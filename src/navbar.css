@@ -1,0 +1,11 @@
+.navbar {
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  color: black !important; /* Change link color */
+}
+
+.nav-link:hover {
+  color: #0056b3 !important; /* Change link hover color */
+}
