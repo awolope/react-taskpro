@@ -52,8 +52,9 @@ const HomePage = () => {
           succeed.
         </p>
       </div>
-      <div className="footer">
-        <p>© 2024 TaskPro. All rights reserved.</p>
+      <div className="Footer">
+        <p>Coded by Awolope Feranmi Esther</p>
+        <p>&copy; {new Date().getFullYear()} TaskPro</p>
       </div>
     </div>
   );
