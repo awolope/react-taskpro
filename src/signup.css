@@ -1,7 +1,7 @@
 /* signup.css */
 .signup-container {
   margin: 0 auto;
-  min-height: 100vh;
+
   padding: 50px;
   width: 600px;
   border-radius: 20px;
@@ -9,7 +9,6 @@
 }
 
 .signup-form {
-  width: 100%;
   background: #fff;
   padding: 20px;
   border-radius: 8px;
@@ -21,7 +20,6 @@
 }
 
 .form-control {
-  width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -71,4 +69,9 @@
 
 .btn-primary:hover {
   background-color: #0056b3;
+}
+@media (max-width: 500px) {
+  .signup-container {
+    max-width: 390px;
+  }
 }

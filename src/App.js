@@ -15,7 +15,7 @@ import "./App.css"; // For custom CSS
 const AppContent = () => {
   const [user, setUser] = useState(null);
   const location = useLocation();
-  const shouldShowNavbar = !["/login", "/signup"].includes(location.pathname);
+
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
@@ -30,7 +30,9 @@ const AppContent = () => {
 
   return (
     <>
-      {shouldShowNavbar && <Navbar user={user} />}
+      {location.pathname !== "/login" && location.pathname !== "/" && (
+        <Navbar user={user} />
+      )}
 
       <div className="content">
         <Routes>
