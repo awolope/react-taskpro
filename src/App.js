@@ -10,7 +10,7 @@ import HomePage from "./Hompeage";
 import SignUp from "./Signup";
 import Login from "./Login";
 import TaskPage from "./TaskPage";
-import "./App.css"; // For custom CSS
+import "./App.css";
 
 const AppContent = () => {
   const [user, setUser] = useState(null);
