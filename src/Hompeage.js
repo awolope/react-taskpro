@@ -31,7 +31,7 @@ const HomePage = () => {
           <p className="date">{getFormattedDate()}</p>
           <p className="time">{getFormattedTime()}</p>
         </div>
-        <Link to="/signup" className="get-started-btn">
+        <Link to="/task" className="get-started-btn">
           Get Started
         </Link>
       </div>

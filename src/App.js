@@ -34,9 +34,9 @@ const AppContent = () => {
 
       <div className="content">
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<SignUp />} />
 
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/task" element={<TaskPage />} />
         </Routes>

@@ -17,7 +17,7 @@ const Login = ({ onLogin }) => {
       storedUser.password === password
     ) {
       onLogin(storedUser);
-      navigate("/");
+      navigate("/home");
     } else {
       setError("Invalid email or password");
     }

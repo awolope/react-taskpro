@@ -50,7 +50,7 @@ const SignUp = () => {
     e.preventDefault();
     if (validateForm()) {
       localStorage.setItem("user", JSON.stringify(formData));
-      navigate("/tasks");
+      navigate("/home");
     }
   };
   return (
